@@ -15,8 +15,9 @@ Code samples from the C# Nullability Series
 - Leveraging the Null-Conditional Operator with Delegates
 - Null-Forgiving Operator (`!`)
 - Declaring Non-Nullable Properties
-- Declaring Non-Nullable Automatically Implemented Properties.
+- Declaring Non-Nullable Automatically Implemented Properties
 - Declaring Non-Nullabe Automatically Implemented Properties in C# 9.0.
 - Validating Non-Nullable Parameters
 - Validating Non-Nullable Parameters in C# 9.0.
 - More Nullable Attributes
+- Nullability with Entity Framework
