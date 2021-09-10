@@ -14,7 +14,7 @@ Code samples from the C# Nullability Series
     - Null-Coalescing and Null-Coalescing Assignment Operators (`??` And `??=`)
     - Null-Forgiving Operator (`!`)
     - Validating Non-Nullable Parameters
-    - Validating Non-Nullable Parameters in C# 10.0
+    - ~~Validating Non-Nullable Parameters in C# 10.0~~
 4. Null-Conditional Operator (`?.` And `?[]`)
     - Leveraging the Null-Conditional Operator with Delegates
 5. Declaring Non-Nullable Properties
