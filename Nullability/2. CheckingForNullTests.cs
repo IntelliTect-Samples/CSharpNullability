@@ -13,13 +13,18 @@ public class CheckingForNullTests
     {
         string? text = null;
 
+        // 👌 Preferable Null Coalesce
+        Assert.Equal("42", text ?? "42");
+        Assert.Equal("42", text ??= "42"); // Includes assignment
+
         // 👎 While readabilty it high, it could
         //    be overridden with custom objects
         //    so potentially suboptimal
         Assert.True(text == null);
 
-        // 👎 Unnecessarily verboxe
+        // 👎 Unnecessarily verbose
         Assert.True(ReferenceEquals(text, null));
+        Assert.True(Equals(text, null));
 
         // 👎 Esoteric
         Assert.False(text?.Length == 0);
@@ -28,10 +33,6 @@ public class CheckingForNullTests
 
         // 👌 Preferable
         Assert.True(text is null);
-
-        // 👌 Preferable Null Coalesce
-        Assert.Equal("42", text ?? "42");
-        Assert.Equal("42", text ??= "42"); // Includes assignment
     }
 
 
@@ -40,11 +41,12 @@ public class CheckingForNullTests
     {
         int? nullableNumber = 42;
 
-        Assert.True(nullableNumber is { });
-        Assert.True(nullableNumber is object);
-
         // 👍 Preferred due to readability
         Assert.True(nullableNumber is not null);
+
+        // Somewhat obscure
+        Assert.True(nullableNumber is { });
+        Assert.True(nullableNumber is object);
     }
 
     [Fact]
@@ -52,15 +54,15 @@ public class CheckingForNullTests
     {
         int number = 42;
 
-        // 👎 No warning on useless not-null check.
-        Assert.True(number is { });
+        // Preferred
+        // 👌 Triggers an error on useless null check.
+        // Assert.True(isNotNull is not null);
 
         // 👍 Triggers a warning on useless null check 
         Assert.True(number is object);
 
-        // Preferred
-        // 👌 Triggers an error on useless null check.
-        // Assert.True(isNotNull is not null);
+        // 👎 No warning on useless not-null check.
+        Assert.True(number is { });
     }
 
     [Fact]
@@ -68,14 +70,14 @@ public class CheckingForNullTests
     {
         string? isNotNull = "Inigo Montoya";
 
-        // 👎 Somewhat obtuse
-        Assert.True(isNotNull is { });
-        Assert.True(isNotNull is object);
-
         // 👌 Preferred
         // 1. It is consistent with value types.
         // 2. Readability is higher.
         Assert.True(isNotNull is not null);
+
+        // 👎 Somewhat obscure
+        Assert.True(isNotNull is { });
+        Assert.True(isNotNull is object);
     }
 
     [Fact]
@@ -89,7 +91,10 @@ public class CheckingForNullTests
     [InlineData("")]
     public static void DoStuffWithNullParameterCheck(string data)
     {
-        // You decide
+        // 👍 Preferable
+        ArgumentNullException.ThrowIfNull(data);
+
+        // 👎 Somewhat obscure
         _ = data ?? throw new ArgumentNullException(nameof(data));
         if (data is null) throw new ArgumentNullException(nameof(data));
 
@@ -113,7 +118,7 @@ public class CheckingForNullTests
     {
         object? foo = null;
 
-       string? _ = foo?.ToString();
+        string? _ = foo?.ToString();
     }
 
 

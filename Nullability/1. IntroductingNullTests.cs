@@ -57,7 +57,7 @@ public class IntroducingNullableTests
         {
             number
         };
-        int[] array = new int[0];
+        int[] array = Array.Empty<int>();
 
         Assert.Equal(typeof(int?[]), nullableArray.GetType());
         Assert.Equal(typeof(Nullable<int>[]), nullableArray.GetType());

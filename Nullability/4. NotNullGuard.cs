@@ -4,8 +4,8 @@ namespace Nullability;
 
 public static class Guard
 {
-    public static string NotNull(string argument,
+    public static T NotNull<T> (T argument,
         [CallerArgumentExpression("argument")]
-         string argumentExpression = null!)
+         string argumentExpression = null!) where T : class
         => argument ?? throw new ArgumentNullException(argumentExpression);
 }

@@ -2,16 +2,28 @@
 
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
-
+using System.Runtime.CompilerServices;
 
 namespace Nullability;
-
-#nullable enable 
 
 public class Person
 {
     public string FirstName { get; init; }
-    public string LastName { get; init; }
+
+    public string? _LastName;
+    public string LastName
+    {
+        get { return _LastName!; }
+        set
+        {
+            ArgumentNullException.ThrowIfNull(value);
+            if (_LastName != value)
+            {
+                _LastName = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(LastName)));
+            }
+        }
+    }
 
     private string _MiddleName = "";
 
@@ -22,6 +34,12 @@ public class Person
         set => _MiddleName = value ?? "";
     }
 
+    //public Person(string firstName, string lastName)
+    //{
+    //    // Be sure to check for null
+    //    FirstName = firstName;
+    //    LastName = lastName;
+    //}
 
     //public Person(string fullName)
     //{
@@ -33,7 +51,7 @@ public class Person
     //    }
     //    else
     //    {
-    //        throw new ArgumentException("Full name not valid",nameof(fullName));
+    //        throw new ArgumentException("Full name not valid", nameof(fullName));
     //    }
     //}
 
@@ -57,6 +75,9 @@ public class Person
 
     //.NET 6
     private DateOnly? _DateOfBirth;
+
+    public event PropertyChangedEventHandler? PropertyChanged;
+
     public DateOnly? DateOfBirth
     {
         get => _DateOfBirth;

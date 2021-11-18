@@ -1,5 +1,7 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 
+namespace Nullability;
+
 class Foo
 {
     [MemberNotNullWhen(true, "Bar")]
